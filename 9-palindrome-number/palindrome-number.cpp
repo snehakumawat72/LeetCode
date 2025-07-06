@@ -1,25 +1,22 @@
 class Solution {
 public:
     bool isPalindrome(int x) {
-       
-        //check for negative number
-        if(x<0)  return false;
+     if(x<0) return false;  
 
-         //new method converting into string
-        string s = to_string(x);
-       int left=0;
-       int right=s.size()-1;
-       
-       while(left<=right){
-        if(s[left]!= s[right]) {
-        
-            return false;
+     int org=x;
+     int rev=0;
+     while(x>0){
+        int ld=x%10;
+         // Check for overflow before multiplying by 10
+            if (rev > INT_MAX / 10 || (rev == INT_MAX / 10 && ld > 7)) {
+                return false;  // If reversing would overflow, it can't be a palindrome
+            }
             
-        }
-        right--;
-        left++;
-       }
-       return true;
+        rev= rev*10+ld;
+        x=x/10;   
+     }
+    return rev==org;
+    //TC- o(log10n)  SC-O(1)
        
     }
 };
